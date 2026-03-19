@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Store - Jasteb & Unchek Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a15;
+            --bg-secondary: #1a1a2a;
+            --gray-dark: #2a2a3a;
+            --gray-medium: #4a4a5a;
+            --glow-blue: #00d4ff;
+            --glow-purple: #ff00ff;
+            --white: #ffffff;
+            --text-light: #b8bcc5;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-primary);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* GALAXY BACKGROUND + 3D BLACKHOLE */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: drift 120s linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: translateX(0); }
+            to { transform: translateX(-200px); }
+        }
+
+        /* 3D BLACKHOLE FOLLOW MOUSE */
+  /* 3D BLACKHOLE REALISTIS - REPLACE INI SAJA! */
+.blackhole {
+    position: fixed;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: rotateZ(0deg);
+}
+
+/* LAPISAN 1: SINGGURAH HITAM */
+.blackhole::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, 
+        rgba(0,0,0,1) 0%, 
+        rgba(5,5,15,1) 20%, 
+        rgba(15,15,35,0.95) 40%, 
+        transparent 70%);
+    box-shadow: 
+        inset 0 0 60px rgba(0,0,0,1),
+        inset 0 0 120px rgba(0,0,0,0.8);
+}
+
+/* LAPISAN 2: AKRESI MATTER DISK */
+.blackhole::after {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(0,212,255,0.6) 30deg,
+        rgba(255,100,150,0.8) 90deg,
+        rgba(255,0,255,0.7) 180deg,
+        rgba(0,255,200,0.6) 270deg,
+        transparent 360deg
+    );
+    animation: accretionSpin 3s linear infinite;
+    filter: blur(8px);
+}
+
+/* LAPISAN 3: PHOTON RING */
+.blackhole-ring {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    border-radius: 50%;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, 
+        rgba(0,212,255,0.9), 
+        rgba(255,0,255,0.9)) 1;
+    animation: photonRing 2.5s linear infinite;
+    filter: drop-shadow(0 0 20px rgba(0,212,255,0.6));
+    box-shadow: 0 0 40px rgba(0,212,255,0.3);
+}
+
+/* LAPISAN 4: EVENT HORIZON GLOW */
+.blackhole-glow {
+    position: absolute;
+    width: 160%;
+    height: 160%;
+    top: -30%;
+    left: -30%;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+        rgba(0,212,255,0.4) 0%, 
+        rgba(255,0,255,0.3) 30%, 
+        transparent 60%);
+    animation: horizonPulse 4s ease-in-out infinite alternate;
+    filter: blur(15px);
+}
+
+/* ANIMASI ULTRA REALISTIS */
+@keyframes accretionSpin {
+    0% { transform: rotateZ(0deg) scale(1); }
+    50% { transform: rotateZ(180deg) scale(1.05); }
+    100% { transform: rotateZ(360deg) scale(1); }
+}
+
+@keyframes photonRing {
+    0% { 
+        transform: rotateZ(0deg) scale(1);
+        opacity: 0.8;
+        box-shadow: 0 0 40px rgba(0,212,255,0.4);
+    }
+    50% { 
+        transform: rotateZ(180deg) scale(1.1);
+        opacity: 1;
+        box-shadow: 0 0 60px rgba(255,0,255,0.6);
+    }
+    100% { 
+        transform: rotateZ(360deg) scale(1);
+        opacity: 0.8;
+        box-shadow: 0 0 40px rgba(0,212,255,0.4);
+    }
+}
+
+@keyframes horizonPulse {
+    0% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    100% { 
+        opacity: 0.6;
+        transform: scale(1.15);
+    }
+}
+
+/* TAMBAHAN: DEBRIS ORBIT */
+.blackhole-debris {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    animation: debrisOrbit 6s linear infinite;
+    box-shadow: 0 0 10px rgba(0,212,255,0.8);
+}
+
+.blackhole-debris:nth-child(2) { 
+    animation-delay: -2s;
+    animation-duration: 5s;
+    background: rgba(255,100,150,0.9);
+}
+
+.blackhole-debris:nth-child(3) { 
+    animation-delay: -4s;
+    animation-duration: 7s;
+    background: rgba(255,0,255,0.9);
+}
+
+@keyframes debrisOrbit {
+    0% { 
+        transform: rotateZ(0deg) translateX(80px) rotateZ(0deg);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { 
+        transform: rotateZ(360deg) translateX(80px) rotateZ(-360deg);
+        opacity: 0;
+    }
+}
+
+        /* CUSTOM CURSOR */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--glow-blue), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 21, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--glow-blue), var(--glow-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--glow-blue);
+            background: var(--gray-medium);
+        }
+
+        /* PAGE SYSTEM */
+        .page-container {
+            min-height: 100vh;
+            padding: 120px 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .page-container.active {
+            display: block;
+        }
+
+        /* WA Buttons - DI ATAS! */
+        .whatsapp-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+            cursor: none;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            margin: 2rem 0 3rem;
+            background: linear-gradient(45deg, var(--glow-blue), var(--glow-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Product Grid - TEMA ABU-ABU */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--gray-dark);
+            border: 1px solid var(--gray-medium);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--glow-blue), var(--glow-purple));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: var(--gray-medium);
+            box-shadow: 0 20px 40px rgba(0,212,255,0.2);
+            border-color: var(--glow-blue);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--gray-medium), var(--gray-dark));
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            position: relative;
+            border: 2px solid var(--gray-medium);
+        }
+
+        .product-image::before {
+            content: '🌀';
+            animation: rotate 8s linear infinite;
+            filter: drop-shadow(0 0 15px var(--glow-blue));
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .product-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--glow-blue);
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--glow-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, var(--glow-blue), var(--glow-purple));
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,212,255,0.4);
+        }
+
+        /* Toggle Button */
+        .page-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .toggle-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--glow-blue), var(--glow-purple));
+            border: none;
+            color: var(--bg-primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: none;
+            box-shadow: 0 10px 30px rgba(0,212,255,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .product-grid { grid-template-columns: 1fr; }
+            .whatsapp-buttons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- GALAXY + BLACKHOLE BACKGROUND -->
+    <div class="galaxy-bg">
+        <div class="stars"></div>
+    </div>
+
+    <!-- 3D BLACKHOLE FOLLOW MOUSE -->
+<!-- BLACKHOLE ULTRA REALISTIS -->
+<div class="blackhole" id="blackhole">
+    <div class="blackhole-ring"></div>
+    <div class="blackhole-glow"></div>
+    <div class="blackhole-debris"></div>
+    <div class="blackhole-debris"></div>
+    <div class="blackhole-debris"></div>
+</div>
+    
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">The Maze Store</div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('page1')" class="nav-link active">🌌 Variant Jasteb</a></li>
+                <li><a onclick="showPage('page2')" class="nav-link">⭐ Variant Unchek</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HALAMAN 1: VARIANT 1 -->
+    <div id="page1" class="page-container active">
+        <div class="whatsapp-buttons">
+            <a class="whatsapp-btn" onclick="joinGroup()">
+                <i class="fab fa-whatsapp"></i> Join Grup WA
+            </a>
+            <a class="whatsapp-btn" onclick="joinChannel()">
+                <i class="fab fa-whatsapp"></i> Join Channel WA
+            </a>
+        </div>
+
+        <h2 class="section-title">VARIANT JASTEB VIP</h2>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">100+ RESS</div>
+                <div class="product-price">Rp10.000</div>
+                <button class="buy-button" onclick="buyProduct('100+ RESS - Rp10rb (Variant JASTEB VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">200+ RESS</div>
+                <div class="product-price">Rp20.000</div>
+                <button class="buy-button" onclick="buyProduct('200+ RESS - Rp20rb (Variant JASTEB VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">300+ RESS</div>
+                <div class="product-price">Rp30.000</div>
+                <button class="buy-button" onclick="buyProduct('300+ RESS - Rp30rb (Variant JASTEB VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+             <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">400+ RESS</div>
+                <div class="product-price">Rp40.000</div>
+                <button class="buy-button" onclick="buyProduct('400+ RESS - Rp40rb (Variant JASTEB VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+             <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">500+ RESS</div>
+                <div class="product-price">Rp50.000</div>
+                <button class="buy-button" onclick="buyProduct('500+ RESS - Rp50rb (Variant JASTEB VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+             <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">LIST LENGKAP JASTEB MAZE</div>
+                <div class="product-price">Rp0</div>
+                <button class="buy-button" onclick="SeeProduct('LIST LENGKAP JASTEB MAZES (Variant JASTEB VIPS)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 2: VARIANT 2 -->
+    <div id="page2" class="page-container">
+        <div class="whatsapp-buttons">
+            <a class="whatsapp-btn" onclick="joinGroup()">
+                <i class="fab fa-whatsapp"></i> Join Grup WA
+            </a>
+            <a class="whatsapp-btn" onclick="joinChannel()">
+                <i class="fab fa-whatsapp"></i> Join Channel WA
+            </a>
+        </div>
+
+        <h2 class="section-title">VARIANT UNCHEK VIP</h2>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">20 UNCHEK</div>
+                <div class="product-price">Rp10.000</div>
+                <button class="buy-button" onclick="buyProduct('20 UNCHEK - Rp10rb (Variant Uncheck VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">40 UNCHEK</div>
+                <div class="product-price">Rp20.000</div>
+                <button class="buy-button" onclick="buyProduct('40 UNCHEK - Rp20rb (Variant Uncheck VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">60 UNCHEK</div>
+                <div class="product-price">Rp30.000</div>
+                <button class="buy-button" onclick="buyProduct('60 UNCHEK - Rp30rb (Variant Uncheck VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+             <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">80 UNCHEK</div>
+                <div class="product-price">Rp40.000</div>
+                <button class="buy-button" onclick="buyProduct('80 UNCHEK - Rp40rb (Variant Uncheck VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+             <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">100 UNCHEK</div>
+                <div class="product-price">Rp50.000</div>
+                <button class="buy-button" onclick="buyProduct('100 UNCHEK - Rp50rb (Variant Uncheck VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+
+             <div class="product-card">
+                <div class="product-image"></div>
+                <div class="product-title">LIST LENGKAP UNCHEK MAZE</div>
+                <div class="product-price">Rp0</div>
+                <button class="buy-button" onclick="SeeProduct('LIST LENGKAP UNCHEK MAZE  (Variant Uncheck VIP)')">
+                    <i class="fab fa-whatsapp"></i> Beli Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOGGLE BUTTON -->
+    <div class="page-toggle">
+        <button class="toggle-btn" onclick="togglePage()" title="Ganti Variant">↔️</button>
+    </div>
+
+    <script>
+        // ⚠️ GANTI INI
+        const WA_NUMBER = "6285764644367"; // Nomor WA kamu
+        const GROUP_LINK = "https://chat.whatsapp.com/C9xwuEoeEhSFN7pfJgIBf6?mode=gi_t"; 
+        const CHANNEL_LINK = "https://whatsapp.com/channel/0029Vb1dDFFGJP8Hscze6G1v";
+
+        let currentPage = 'page1';
+
+        // MOUSE FOLLOW BLACKHOLE + CURSOR
+        document.addEventListener('mousemove', (e) => {
+            const blackhole = document.getElementById('blackhole');
+            const cursor = document.getElementById('cursor');
+            
+            blackhole.style.left = e.clientX - 100 + 'px';
+            blackhole.style.top = e.clientY - 100 + 'px';
+            
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            cursor.style.transform = `scale(${e.buttons ? 2 : 1})`;
+        });
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentPage = pageName;
+        }
+
+        function togglePage() {
+            if (currentPage === 'page1') showPage('page2');
+            else showPage('page1');
+        }
+
+        function SeeProduct(productName) {
+            const message = encodeURIComponent(
+                `Halo admin! 🚀\n\n` +
+                `Saya mau lihat:\n${productName}\n\n` 
+                            );
+            window.open(`https://wa.me/${WA_NUMBER}?text=${message}`, '_blank');
+        }
+
+        function buyProduct(productName) {
+            const message = encodeURIComponent(
+                `Halo admin! 🚀\n\n` +
+                `Saya mau beli:\n${productName}\n\n` +
+                `Info payment dong min\n\n` 
+                            );
+            window.open(`https://wa.me/${WA_NUMBER}?text=${message}`, '_blank');
+        }
+
+        function joinGroup() {
+            window.open(GROUP_LINK, '_blank');
+        }
+
+        function joinChannel() {
+            window.open(CHANNEL_LINK, '_blank');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').style.background = 
+                window.scrollY > 100 ? 'rgba(10,10,21,0.98)' : 'rgba(10,10,21,0.95)';
+        });
+
+        // Prevent text selection
+        document.addEventListener('selectstart', e => e.preventDefault());
+
+        // Mobile touch support
+        document.addEventListener('touchmove', (e) => {
+            const blackhole = document.getElementById('blackhole');
+            const cursor = document.getElementById('cursor');
+            const touch = e.touches[0];
+            
+            blackhole.style.left = touch.clientX - 100 + 'px';
+            blackhole.style.top = touch.clientY - 100 + 'px';
+            
+            cursor.style.left = touch.clientX - 10 + 'px';
+            cursor.style.top = touch.clientY - 10 + 'px';
+        });
+    </script>
+</body>
+</html>
